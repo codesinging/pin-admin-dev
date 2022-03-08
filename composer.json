@@ -22,7 +22,17 @@
     },
     "autoload-dev": {
         "psr-4": {
-            "CodeSinging\\PinAdmin\\Tests\\": "tests"
+            "Tests\\": "tests"
+        }
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "CodeSinging\\PinAdmin\\Foundation\\ServiceProvider"
+            ],
+            "aliases": {
+                "Admin": "CodeSinging\\PinAdmin\\Foundation\\Admin"
+            }
         }
     }
 }
