@@ -18,6 +18,7 @@ use JetBrains\PhpStorm\Pure;
 /**
  * 应用程序门面
  *
+ * @method static Application app(string $name = null)
  * @method static string name(string $suffix = null, string $separator = '_')
  * @method static string studlyName(string $suffix = '')
  * @method static string guard()

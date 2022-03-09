@@ -81,6 +81,20 @@ class Application
     }
 
     /**
+     * 返回 PinAdmin 应用的单例实例
+     *
+     * @param string|null $name
+     *
+     * @return $this
+     */
+    public function app(string $name = null): static
+    {
+        $app = app(Manager::LABEL);
+        is_null($name) or $app->boot($name);
+        return $app;
+    }
+
+    /**
      * 返回 PinAdmin 应用名称
      *
      * @param string|null $suffix

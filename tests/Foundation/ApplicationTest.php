@@ -17,6 +17,14 @@ use Tests\TestCase;
 
 class ApplicationTest extends TestCase
 {
+    public function testApp()
+    {
+        self::assertInstanceOf(Application::class, (new Application())->app());
+        self::assertSame(app(Manager::LABEL), (new Application())->app());
+        self::assertSame((new Application())->app(), (new Application())->app());
+        self::assertEquals('admin', (new Application())->app('admin')->name());
+    }
+
     public function testName()
     {
         self::assertEquals('admin', (new Application('admin'))->name());
