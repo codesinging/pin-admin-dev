@@ -11,6 +11,7 @@ use CodeSinging\PinAdmin\Foundation\Factory;
 use CodeSinging\PinAdmin\Foundation\Manager;
 use Exception;
 use Illuminate\Config\Repository;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\File;
 use Tests\TestCase;
@@ -159,12 +160,30 @@ class HelpersTest extends TestCase
      * @depends testCreateUserApplication
      * @return void
      */
-    public function testUser()
+    public function testAdminUser()
     {
         admin('admin');
 
         self::assertEquals(Auth::guard(admin()->guard())->user(), admin_user());
 
         Manager::clear();
+    }
+
+    public function testSuccess()
+    {
+        self::assertInstanceOf(JsonResponse::class, success());
+        self::assertEquals(200, success()->status());
+        self::assertEquals('message', success('message')->getData(true)['message']);
+        self::assertEquals(0, success('message')->getData(true)['code']);
+        self::assertEquals(['id' => 1], success(['id' => 1])->getData(true)['data']);
+    }
+
+    public function testError()
+    {
+        self::assertInstanceOf(JsonResponse::class, error());
+        self::assertEquals(200, error()->status());
+        self::assertEquals('message', error('message')->getData(true)['message']);
+        self::assertEquals(-1, error('message')->getData(true)['code']);
+        self::assertEquals(10010, error('message', 10010)->getData(true)['code']);
     }
 }

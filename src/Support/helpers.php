@@ -6,10 +6,14 @@
 
 use CodeSinging\PinAdmin\Foundation\Admin;
 use CodeSinging\PinAdmin\Foundation\Application;
+use CodeSinging\PinAdmin\Support\Routing\ApiResponse;
 use Illuminate\Config\Repository;
 use Illuminate\Contracts\Auth\Authenticatable;
 use Illuminate\Contracts\Auth\Guard;
 use Illuminate\Contracts\Auth\StatefulGuard;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Http\JsonResponse;
+use Illuminate\Support\Collection;
 use Illuminate\View\Factory;
 use Illuminate\View\View;
 
@@ -168,5 +172,36 @@ if (!function_exists('admin_user')) {
     function admin_user(): ?Authenticatable
     {
         return Admin::app()->user();
+    }
+}
+
+if (!function_exists('success')) {
+    /**
+     * 返回正确的 json 响应信息
+     *
+     * @param array|string|Collection|Model|null $message
+     * @param array|Collection|Model|null $data
+     *
+     * @return JsonResponse
+     */
+    function success(Model|array|string|Collection $message = null, Model|array|Collection $data = null): JsonResponse
+    {
+        return ApiResponse::success($message, $data);
+    }
+}
+
+if (!function_exists('error')) {
+    /**
+     * 返回错误的 json 响应信息
+     *
+     * @param string|null $message
+     * @param int $code
+     * @param mixed|null $data
+     *
+     * @return JsonResponse
+     */
+    function error(string $message = null, int $code = -1, mixed $data = null): JsonResponse
+    {
+        return ApiResponse::error($message, $code, $data);
     }
 }
