@@ -6,6 +6,9 @@
 
 namespace CodeSinging\PinAdmin\Foundation;
 
+use CodeSinging\PinAdmin\Console\ListCommand;
+use CodeSinging\PinAdmin\Middleware\Auth;
+use CodeSinging\PinAdmin\Middleware\Guest;
 use Illuminate\Routing\Router;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\Route;
@@ -19,14 +22,13 @@ class ServiceProvider extends \Illuminate\Support\ServiceProvider
      * @var array
      */
     protected array $commands = [
-
+        ListCommand::class,
     ];
 
     /**
      * @var array
      */
     protected array $middlewares = [
-
     ];
 
     /**
@@ -100,6 +102,9 @@ class ServiceProvider extends \Illuminate\Support\ServiceProvider
     {
         /** @var Router $router */
         $router = $this->app['router'];
+
+        $this->middlewares[Manager::label('auth','.')] = Auth::class;
+        $this->middlewares[Manager::label('guest','.')] = Guest::class;
 
         foreach ($this->middlewares as $key => $middleware) {
             $router->aliasMiddleware($key, $middleware);
