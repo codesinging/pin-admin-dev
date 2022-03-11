@@ -7,6 +7,7 @@
 namespace CodeSinging\PinAdmin\Foundation;
 
 use CodeSinging\PinAdmin\Console\AdminCommand;
+use CodeSinging\PinAdmin\Console\CreateCommand;
 use CodeSinging\PinAdmin\Console\ListCommand;
 use CodeSinging\PinAdmin\Middleware\Auth;
 use CodeSinging\PinAdmin\Middleware\Guest;
@@ -24,6 +25,7 @@ class ServiceProvider extends \Illuminate\Support\ServiceProvider
      */
     protected array $commands = [
         AdminCommand::class,
+        CreateCommand::class,
         ListCommand::class,
     ];
 

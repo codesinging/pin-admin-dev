@@ -91,6 +91,19 @@ class ApplicationTest extends TestCase
         self::assertEquals('App\\Admins\\Admin\\Controllers', (new Application('admin'))->getNamespace('Controllers'));
     }
 
+    public function testVerify()
+    {
+        self::assertTrue((new Application())->verify('admin'));
+        self::assertTrue((new Application())->verify('admin123'));
+        self::assertTrue((new Application())->verify('admin_123'));
+        self::assertTrue((new Application())->verify('admin_shop'));
+        self::assertFalse((new Application())->verify('Admin'));
+        self::assertFalse((new Application())->verify('123'));
+        self::assertFalse((new Application())->verify('admin.123'));
+        self::assertFalse((new Application())->verify('admin-123'));
+        self::assertFalse((new Application())->verify('admin-user'));
+    }
+
     public function testBoot()
     {
         self::assertInstanceOf(Application::class, (new Application())->boot('admin'));

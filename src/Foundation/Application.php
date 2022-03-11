@@ -6,6 +6,8 @@
 
 namespace CodeSinging\PinAdmin\Foundation;
 
+use CodeSinging\PinAdmin\Exception\AdminException;
+use CodeSinging\PinAdmin\Exception\ErrorCode;
 use Exception;
 use Illuminate\Config\Repository;
 use Illuminate\Contracts\Auth\Authenticatable;
@@ -74,6 +76,8 @@ class Application
 
     /**
      * @param string|null $name
+     *
+     * @throws AdminException
      */
     public function __construct(string $name = null)
     {
@@ -247,17 +251,34 @@ class Application
     }
 
     /**
+     * 验证应用名是否合法
+     *
+     * @param string $name
+     *
+     * @return bool
+     */
+    public function verify(string $name): bool
+    {
+        return !empty($name) && preg_match('/^[a-z]+[a-z0-9_]*$/', $name) === 1;
+    }
+
+    /**
      * 启动 PinAdmin 应用
      *
      * @param string $name
      *
      * @return $this
+     * @throws AdminException
      */
     public function boot(string $name): static
     {
         if (!isset($this->name) || $this->name !== $name) {
-            $this->initInfo($name);
-            $this->initConfig();
+            if ($this->verify($name)){
+                $this->initInfo($name);
+                $this->initConfig();
+            } else {
+                throw new AdminException('非法应用名', ErrorCode::INVALID_APPLICATION_NAME);
+            }
         }
 
         return $this;
