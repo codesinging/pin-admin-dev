@@ -6,6 +6,7 @@
 
 namespace CodeSinging\PinAdmin\Support\Routing;
 
+use CodeSinging\PinAdmin\Exception\ErrorCode;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Collection;
@@ -22,7 +23,7 @@ class ApiResponse
      */
     public static function success(Model|array|string|Collection $message = null, Model|array|Collection $data = null): JsonResponse
     {
-        $code = 0;
+        $code = ErrorCode::OK;
         is_string($message) or list($data, $message) = [$message, $data];
         return response()->json(compact('code', 'message', 'data'));
     }
@@ -36,7 +37,7 @@ class ApiResponse
      *
      * @return JsonResponse
      */
-    public static function error(string $message = null, int $code = -1, mixed $data = null): JsonResponse
+    public static function error(string $message = null, int $code = ErrorCode::ERROR, mixed $data = null): JsonResponse
     {
         return response()->json(compact('message', 'code', 'data'));
     }
