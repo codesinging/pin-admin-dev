@@ -43,6 +43,7 @@ class Factory
         $this->createRoutes();
         $this->createResources();
         $this->createConfig();
+        $this->createModels();
 
         Manager::loadApplications();
     }
@@ -164,6 +165,15 @@ class Factory
     private function createConfig()
     {
         $this->createFiles($this->stubPath('config'), $this->application->path('config'));
+    }
+
+    /**
+     * 创建模型文件
+     * @return void
+     */
+    private function createModels()
+    {
+        $this->createFiles($this->stubPath('models'), $this->application->appPath('Models'));
     }
 
     /**

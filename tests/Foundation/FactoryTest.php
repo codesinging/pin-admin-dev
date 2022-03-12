@@ -80,4 +80,11 @@ class FactoryTest extends TestCase
         self::assertFileExists($this->application->path('config/app.php'));
         self::assertEquals('Admin', $this->application->config('name'));
     }
+
+    public function testCreateModels()
+    {
+        $this->create();
+
+        self::assertFileExists($this->application->appPath('Models/AdminUser.php'));
+    }
 }
