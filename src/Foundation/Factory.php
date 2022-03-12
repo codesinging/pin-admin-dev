@@ -44,6 +44,7 @@ class Factory
         $this->createResources();
         $this->createConfig();
         $this->createModels();
+        $this->createControllers();
 
         Manager::loadApplications();
     }
@@ -169,11 +170,22 @@ class Factory
 
     /**
      * 创建模型文件
+     *
      * @return void
      */
     private function createModels()
     {
         $this->createFiles($this->stubPath('models'), $this->application->appPath('Models'));
+    }
+
+    /**
+     * 创建控制器文件
+     *
+     * @return void
+     */
+    private function createControllers()
+    {
+        $this->createFiles($this->stubPath('controllers'), $this->application->appPath('Controllers'));
     }
 
     /**
