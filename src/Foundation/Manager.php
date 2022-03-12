@@ -6,6 +6,7 @@
 
 namespace CodeSinging\PinAdmin\Foundation;
 
+use CodeSinging\PinAdmin\Exception\AdminException;
 use Illuminate\Support\Facades\File;
 
 /**
@@ -175,6 +176,7 @@ class Manager
      * 加载所有应用
      *
      * @return void
+     * @throws AdminException
      */
     public static function loadApplications()
     {
@@ -208,6 +210,7 @@ class Manager
      * @param string|Application $application
      *
      * @return bool
+     * @throws AdminException
      */
     public static function exists(string|Application $application): bool
     {
@@ -221,6 +224,7 @@ class Manager
      * @param string|Application $application
      *
      * @return bool
+     * @throws AdminException
      */
     public static function has(string|Application $application): bool
     {

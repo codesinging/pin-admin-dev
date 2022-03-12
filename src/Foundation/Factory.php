@@ -6,6 +6,7 @@
 
 namespace CodeSinging\PinAdmin\Foundation;
 
+use CodeSinging\PinAdmin\Exception\AdminException;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Str;
 
@@ -21,6 +22,8 @@ class Factory
 
     /**
      * @param string|Application $application
+     *
+     * @throws AdminException
      */
     public function __construct(string|Application $application)
     {
@@ -31,6 +34,7 @@ class Factory
      * 创建应用
      *
      * @return void
+     * @throws AdminException
      */
     public function create()
     {
