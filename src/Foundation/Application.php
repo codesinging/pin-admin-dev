@@ -6,6 +6,7 @@
 
 namespace CodeSinging\PinAdmin\Foundation;
 
+use Closure;
 use CodeSinging\PinAdmin\Exception\AdminException;
 use CodeSinging\PinAdmin\Exception\ErrorCode;
 use Exception;
@@ -15,6 +16,7 @@ use Illuminate\Contracts\Auth\Guard;
 use Illuminate\Contracts\Auth\StatefulGuard;
 use Illuminate\Routing\UrlGenerator;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Str;
 use Illuminate\View\Factory;
 use Illuminate\View\View;
@@ -273,7 +275,7 @@ class Application
     public function boot(string $name): static
     {
         if (!isset($this->name) || $this->name !== $name) {
-            if ($this->verify($name)){
+            if ($this->verify($name)) {
                 $this->initInfo($name);
                 $this->initConfig();
             } else {
@@ -434,5 +436,31 @@ class Application
     public function user(): ?Authenticatable
     {
         return $this->auth()->user();
+    }
+
+    /**
+     * 注册需要认证的路由
+     *
+     * @param Closure $closure
+     *
+     * @return $this
+     */
+    public function authRoutes(Closure $closure): static
+    {
+        Route::middleware($this->config('middlewares.auth'))->group(fn() => call_user_func($closure));
+        return $this;
+    }
+
+    /**
+     * 注册无需认证的路由
+     *
+     * @param Closure $closure
+     *
+     * @return $this
+     */
+    public function guestRoutes(Closure $closure): static
+    {
+        Route::middleware($this->config('middlewares.guest'))->group(fn() => call_user_func($closure));
+        return $this;
     }
 }

@@ -6,6 +6,7 @@
 
 namespace CodeSinging\PinAdmin\Foundation;
 
+use Closure;
 use Illuminate\Config\Repository;
 use Illuminate\Contracts\Auth\Authenticatable;
 use Illuminate\Contracts\Auth\Guard;
@@ -41,6 +42,8 @@ use JetBrains\PhpStorm\Pure;
  * @method static Factory|View page(string $path)
  * @method static Guard|StatefulGuard auth()
  * @method static Authenticatable|null user()
+ * @method static Application authRoutes(Closure $closure)
+ * @method static Application guestRoutes(Closure $closure)
  */
 class Admin extends Facade
 {
