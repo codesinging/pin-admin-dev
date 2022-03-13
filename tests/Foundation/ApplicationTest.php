@@ -6,6 +6,7 @@
 
 namespace Tests\Foundation;
 
+use CodeSinging\PinAdmin\Exception\AdminException;
 use CodeSinging\PinAdmin\Foundation\Application;
 use CodeSinging\PinAdmin\Foundation\Factory;
 use CodeSinging\PinAdmin\Foundation\Manager;
@@ -240,6 +241,9 @@ class ApplicationTest extends TestCase
         Manager::clear();
     }
 
+    /**
+     * @throws AdminException
+     */
     public function testCreateUserApplication(): Factory
     {
         Manager::clear();
@@ -260,5 +264,10 @@ class ApplicationTest extends TestCase
         self::assertEquals(Auth::guard($application->guard())->user(), $application->user());
 
         Manager::clear();
+    }
+
+    public function testRouteGroup()
+    {
+        
     }
 }

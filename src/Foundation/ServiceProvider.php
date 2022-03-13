@@ -94,8 +94,7 @@ class ServiceProvider extends \Illuminate\Support\ServiceProvider
     private function registerRoutes()
     {
         foreach (Manager::applications() as $application) {
-            Route::prefix($application->routePrefix())
-                ->group(fn() => $this->loadRoutesFrom($application->path('routes/web.php')));
+            $this->loadRoutesFrom($application->path('routes/web.php'));
         }
     }
 

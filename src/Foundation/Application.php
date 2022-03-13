@@ -439,28 +439,31 @@ class Application
     }
 
     /**
-     * 注册需要认证的路由
+     * 注册路由
      *
      * @param Closure $closure
+     * @param bool $auth
      *
      * @return $this
      */
-    public function authRoutes(Closure $closure): static
+    public function routeGroup(Closure $closure, bool $auth = true): static
     {
-        Route::middleware($this->config('middlewares.auth'))->group(fn() => call_user_func($closure));
+        Route::prefix($this->routePrefix())
+            ->middleware($auth ? $this->config('middlewares.auth', []) : $this->config('middlewares.guest', []))
+            ->group(fn() => call_user_func($closure));
+
         return $this;
     }
 
     /**
-     * 注册无需认证的路由
-     *
-     * @param Closure $closure
-     *
+     * 注册默认路由
      * @return $this
      */
-    public function guestRoutes(Closure $closure): static
+    public function defaultRoutes(): static
     {
-        Route::middleware($this->config('middlewares.guest'))->group(fn() => call_user_func($closure));
+        $this->routeGroup(function (){
+            Route::get('auth', [$this->getNamespace('Controllers', 'AuthController'), 'index']);
+        });
         return $this;
     }
 }

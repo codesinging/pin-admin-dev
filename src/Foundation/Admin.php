@@ -42,8 +42,8 @@ use JetBrains\PhpStorm\Pure;
  * @method static Factory|View page(string $path)
  * @method static Guard|StatefulGuard auth()
  * @method static Authenticatable|null user()
- * @method static Application authRoutes(Closure $closure)
- * @method static Application guestRoutes(Closure $closure)
+ * @method static Application routeGroup(Closure $closure, bool $auth = true)
+ * @method static Application defaultRoutes()
  */
 class Admin extends Facade
 {
